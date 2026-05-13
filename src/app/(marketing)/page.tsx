@@ -2,6 +2,7 @@
 import type { Metadata } from "next"
 import { Hero } from "@/components/sections/Hero"
 import { TrustBar } from "@/components/sections/TrustBar"
+import { SentinelSystem } from "@/components/sections/SentinelSystem"
 
 export const metadata: Metadata = {
   title: "Sentinel Institute — Where Enterprise Security Teams Get Certified",
@@ -14,6 +15,7 @@ export default function HomePage() {
     <>
       <Hero />
       <TrustBar />
+      <SentinelSystem />
     </>
   )
 }
