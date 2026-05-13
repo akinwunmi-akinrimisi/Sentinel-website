@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Third-party skill scripts vendored into .agents/ ship CommonJS / utility
+    // JS that is not part of this app's source — skip linting them.
+    ".agents/**",
+    ".superpowers/**",
   ]),
 ]);
 
