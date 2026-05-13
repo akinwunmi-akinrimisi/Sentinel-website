@@ -10,17 +10,22 @@ interface FadeUpProps {
   duration?: number
   /** Optional class to apply to the wrapper. */
   className?: string
-  /** If true, animate immediately on mount instead of waiting for intersection. Default false. */
+  /** If true, fire the animation immediately on mount regardless of viewport. Default false. */
   immediate?: boolean
 }
 
 /**
- * Fades its children up from 24px below their final position when they
- * enter the viewport. Uses the `fadeUp` keyframe defined in globals.css.
- * Runs once per mount — does not re-animate on subsequent intersections.
+ * Fades its children up from 24px below their final position. Renders
+ * content visible-at-final-position during SSR / no-JS / pre-hydration
+ * so the content is never invisible to crawlers or Lighthouse audits.
+ *
+ * After hydration, if the element is already in the viewport on mount,
+ * the animation fires immediately. If it starts below the viewport, the
+ * wrapper hides the content and an IntersectionObserver reveals it when
+ * the user scrolls to it.
  *
  * Respects `prefers-reduced-motion: reduce` via the global media query
- * in `globals.css` which disables all animations.
+ * in `globals.css`.
  */
 export function FadeUp({
   children,
@@ -30,18 +35,37 @@ export function FadeUp({
   immediate = false,
 }: FadeUpProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const [hasAnimated, setHasAnimated] = useState(immediate)
+  // Tri-state:
+  //   "ssr"      — initial; rendered visible at final position with no animation
+  //   "hidden"   — JS confirmed element is below viewport; hide and wait for observer
+  //   "animated" — animation playing (or completed, since it's forwards)
+  const [phase, setPhase] = useState<"ssr" | "hidden" | "animated">("ssr")
 
   useEffect(() => {
-    if (immediate || hasAnimated) return
+    if (immediate) {
+      setPhase("animated")
+      return
+    }
+
     const node = ref.current
     if (!node) return
 
+    const rect = node.getBoundingClientRect()
+    const inViewport = rect.top < window.innerHeight && rect.bottom > 0
+
+    if (inViewport) {
+      // Already on-screen at mount — fire the animation directly, no hide step
+      setPhase("animated")
+      return
+    }
+
+    // Off-screen at mount — hide and observe
+    setPhase("hidden")
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            setHasAnimated(true)
+            setPhase("animated")
             observer.disconnect()
           }
         }
@@ -51,21 +75,21 @@ export function FadeUp({
 
     observer.observe(node)
     return () => observer.disconnect()
-  }, [immediate, hasAnimated])
+  }, [immediate])
+
+  let style: React.CSSProperties = {}
+  if (phase === "hidden") {
+    style = { opacity: 0, transform: "translateY(24px)" }
+  } else if (phase === "animated") {
+    style = {
+      animation: `fadeUp ${duration}s cubic-bezier(0.22, 1, 0.36, 1) ${delay}s forwards`,
+      opacity: 0,
+    }
+  }
+  // phase === "ssr" → empty style → content visible at final position
 
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={
-        hasAnimated
-          ? {
-              animation: `fadeUp ${duration}s cubic-bezier(0.22, 1, 0.36, 1) ${delay}s forwards`,
-              opacity: 0,
-            }
-          : { opacity: 0, transform: "translateY(24px)" }
-      }
-    >
+    <div ref={ref} className={className} style={style}>
       {children}
     </div>
   )
