@@ -8,9 +8,9 @@
 
 @theme {
   /* ── Fonts ──────────────────────────────────────────────── */
-  --font-display: "DisplayFont", serif;
-  --font-body:    "BodyFont", sans-serif;
-  --font-mono:    "JetBrains Mono", ui-monospace, monospace;
+  --font-display: "IBM Plex Serif", ui-serif, Georgia, serif;
+  --font-body:    "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   /* ── Brand color scale (navy dominant) ───────────────────── */
   --color-brand-50:   #EFF6FF;
@@ -129,51 +129,9 @@
   50%       { box-shadow: 0 0 60px rgba(37, 99, 235, 0.3); }
 }
 
-/* ============================================================
-   SELF-HOSTED FONTS
-   Place font files in /public/fonts/
-   Replace font-family names with actual chosen fonts
-   ============================================================ */
-
-@font-face {
-  font-family: "DisplayFont";
-  src: url("/fonts/display-regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DisplayFont";
-  src: url("/fonts/display-medium.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DisplayFont";
-  src: url("/fonts/display-semibold.woff2") format("woff2");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "BodyFont";
-  src: url("/fonts/body-regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "BodyFont";
-  src: url("/fonts/body-medium.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
+/* IBM Plex fonts are loaded via @fontsource imports in src/app/layout.tsx —
+   the @theme --font-* tokens above reference the family names supplied by
+   those imports. */
 
 /* ============================================================
    BASE STYLES
