@@ -41,8 +41,13 @@ export function FadeUp({
   //   "animated" — animation playing (or completed, since it's forwards)
   const [phase, setPhase] = useState<"ssr" | "hidden" | "animated">("ssr")
 
+  // The setPhase calls inside this effect intentionally drive the SSR→hydrated
+  // transition; the cascading-renders concern the lint rule guards against does
+  // not apply because the effect runs once with stable deps and reaches a
+  // terminal state. See the "Tri-state" comment above for the lifecycle.
   useEffect(() => {
     if (immediate) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPhase("animated")
       return
     }
