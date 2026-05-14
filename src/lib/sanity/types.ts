@@ -79,6 +79,12 @@ export interface CaseStudy {
 
 export type ProgramSlug = 'security-plus' | 'cysa-plus' | 'casp-plus'
 
+export interface ComparisonRow {
+  category: string
+  sentinel: string
+  selfStudy: string
+}
+
 export interface ProgramPage {
   _id: string
   slug: ProgramSlug
@@ -91,6 +97,9 @@ export interface ProgramPage {
   whoNeedsIt: PortableTextBlock[]
   curriculumOutline: PortableTextBlock[]
   examObjectives: string[]
+  outcomes: string[]
+  sampleLesson: PortableTextBlock[]
+  comparisonSelfStudy: ComparisonRow[]
   homepageOrder: number
   seoTitle: string
   seoDescription: string
