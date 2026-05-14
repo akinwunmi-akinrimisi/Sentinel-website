@@ -7,13 +7,11 @@ const SITE_URL =
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
   return [
-    {
-      url: SITE_URL,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 1.0,
-    },
-    // Future PRs add /programs, /industries, /results, /about, /faq, /contact.
-    // They append themselves to this list when they ship.
+    { url: SITE_URL, lastModified: now, changeFrequency: "weekly", priority: 1.0 },
+    { url: `${SITE_URL}/programs`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/programs/security-plus`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_URL}/programs/cysa-plus`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_URL}/programs/casp-plus`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    // Future PRs add /industries, /results, /about, /faq.
   ]
 }
