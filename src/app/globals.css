@@ -197,7 +197,6 @@
   }
 
   html {
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -256,6 +255,13 @@
   img, video {
     max-width: 100%;
     height: auto;
+  }
+}
+
+/* Anchor-link smooth scroll, respecting reduced-motion (PR 9). */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
 
