@@ -84,7 +84,7 @@ const SENTINEL_VS_SELF_STUDY: ComparisonRow[] = [
   { category: 'Schedule', sentinel: 'Live instructor-led cohort, 2–3 sessions per week, fixed start dates', selfStudy: 'Self-paced — completion timing on the learner, no fixed milestones' },
   { category: 'Live instruction', sentinel: 'Working sessions on real declassified breach scenarios with senior instructors', selfStudy: 'Video recordings and PDF study guides only — no live interaction' },
   { category: 'Practice incidents', sentinel: '12 end-to-end incident scenarios worked in pairs across the cohort', selfStudy: 'Multiple-choice exam prep questions only — no scenario work' },
-  { category: 'Pass guarantee', sentinel: 'No-pass, re-train at no cost — built into every enterprise contract', selfStudy: 'None — re-take fees are the learner\'s responsibility' },
+  { category: 'Pass guarantee', sentinel: 'No-pass, re-train at no cost — built into every enterprise contract', selfStudy: 'None — re-take fees are the learner’s responsibility' },
   { category: 'Compliance documentation', sentinel: 'Audit-ready training records + certificate package signed by Sentinel', selfStudy: 'Pearson VUE certificate copy only — no training audit trail' },
   { category: 'Cohort cap', sentinel: '12 learners maximum per cohort — instructor knows every team', selfStudy: 'N/A — individual study, no cohort' },
 ]
