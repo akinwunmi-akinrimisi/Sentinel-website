@@ -270,7 +270,7 @@ export const FALLBACK_INDUSTRIES: IndustryPage[] = [
   },
   {
     _id: 'fallback-industry-defense',
-    slug: 'defense',
+    slug: 'government-defense',
     industryName: 'Defense Contractors',
     complianceMandate: 'CMMC Level 2 / NIST SP 800-171',
     complianceMandateFull:
