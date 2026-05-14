@@ -16,7 +16,7 @@ from typing import Any
 
 from playwright.sync_api import sync_playwright, Page, ConsoleMessage
 
-BASE = "http://localhost:3000"
+BASE = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:3000"
 OUT_DIR = Path(__file__).parent.parent / "docs" / "qa-smoke"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -54,6 +54,18 @@ def attach_console_capture(page: Page, page_label: str) -> None:
         lambda exc: report["console_errors"].append(
             {"page": page_label, "type": "pageerror", "text": str(exc)}
         ),
+    )
+    page.on(
+        "response",
+        lambda resp: report["console_errors"].append(
+            {
+                "page": page_label,
+                "type": f"http-{resp.status}",
+                "text": f"{resp.request.resource_type} {resp.url}",
+            }
+        )
+        if resp.status >= 400
+        else None,
     )
 
 
