@@ -1,7 +1,7 @@
 "use client"
 
+import React, { useEffect, useId, useRef, useState, type ReactElement } from "react"
 import { useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "@/components/ui/input"
@@ -98,24 +98,24 @@ export function ProposalForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-6 max-w-[42rem]"
     >
-      <Field label="Full name" error={errors.fullName?.message}>
+      <Field label="Full name" error={errors.fullName?.message} required>
         <Input {...register("fullName")} autoComplete="name" />
       </Field>
 
-      <Field label="Business email" error={errors.businessEmail?.message}>
+      <Field label="Business email" error={errors.businessEmail?.message} required>
         <Input type="email" {...register("businessEmail")} autoComplete="email" />
       </Field>
 
-      <Field label="Phone" error={errors.phone?.message}>
+      <Field label="Phone" error={errors.phone?.message} required>
         <Input type="tel" {...register("phone")} autoComplete="tel" placeholder="+1 (312) 555-0194" />
       </Field>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Field label="Company" error={errors.company?.message}>
+        <Field label="Company" error={errors.company?.message} required>
           <Input {...register("company")} autoComplete="organization" />
         </Field>
 
-        <Field label="Job title" error={errors.jobTitle?.message}>
+        <Field label="Job title" error={errors.jobTitle?.message} required>
           <Input {...register("jobTitle")} autoComplete="organization-title" />
         </Field>
       </div>
@@ -127,6 +127,7 @@ export function ProposalForm() {
           control={control}
           options={PROPOSAL_OPTIONS.companySize}
           error={errors.companySize?.message}
+          required
         />
         <ControlledSelect
           name="industry"
@@ -134,6 +135,7 @@ export function ProposalForm() {
           control={control}
           options={PROPOSAL_OPTIONS.industry}
           error={errors.industry?.message}
+          required
         />
       </div>
 
@@ -143,10 +145,12 @@ export function ProposalForm() {
         control={control}
         options={PROPOSAL_OPTIONS.teamSize}
         error={errors.teamSize?.message}
+        required
       />
 
-      <Field label="Certifications of interest" error={errors.certifications?.message}>
+      <Field label="Certifications of interest" error={errors.certifications?.message} required>
         <fieldset className="flex flex-wrap gap-x-5 gap-y-3">
+          <legend className="sr-only">Certifications of interest</legend>
           {PROPOSAL_OPTIONS.certifications.map((cert) => (
             <label key={cert} className="inline-flex items-center gap-2 text-[var(--color-text-primary)] cursor-pointer">
               <input
@@ -169,6 +173,7 @@ export function ProposalForm() {
           control={control}
           options={PROPOSAL_OPTIONS.complianceDriver}
           error={errors.complianceDriver?.message}
+          required
         />
         <ControlledSelect
           name="timeline"
@@ -176,6 +181,7 @@ export function ProposalForm() {
           control={control}
           options={PROPOSAL_OPTIONS.timeline}
           error={errors.timeline?.message}
+          required
         />
       </div>
 
@@ -185,6 +191,7 @@ export function ProposalForm() {
         control={control}
         options={PROPOSAL_OPTIONS.referralSource}
         error={errors.referralSource?.message}
+        required
       />
 
       <Field label="Additional notes (optional)" error={errors.notes?.message}>
@@ -212,18 +219,42 @@ function Field({
   label,
   error,
   children,
+  required,
 }: {
   label: string
   error?: string
-  children: React.ReactNode
+  children: ReactElement
+  required?: boolean
 }) {
+  const id = useId()
+  const errorId = error ? `${id}-error` : undefined
   return (
     <div className="flex flex-col gap-2">
-      <Label className="font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-[var(--color-text-secondary)]">
+      <Label
+        htmlFor={id}
+        className="font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-[var(--color-text-secondary)]"
+      >
         {label}
+        {required ? (
+          <span aria-hidden="true" className="ml-1 text-[var(--color-accent-light)]">
+            *
+          </span>
+        ) : null}
       </Label>
-      {children}
-      {error ? <p className="text-sm text-red-400">{error}</p> : null}
+      {React.cloneElement(children, {
+        id,
+        "aria-invalid": error ? true : undefined,
+        "aria-describedby": errorId,
+        "aria-required": required ? true : undefined,
+      } as Record<string, unknown>)}
+      <p
+        id={errorId}
+        className="text-sm text-red-400 min-h-[1.25rem]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {error ?? ""}
+      </p>
     </div>
   )
 }
@@ -235,6 +266,7 @@ interface ControlledSelectProps<TName extends keyof ProposalOutput> {
   control: any
   options: readonly string[]
   error?: string
+  required?: boolean
 }
 
 function ControlledSelect<TName extends keyof ProposalOutput>({
@@ -243,9 +275,10 @@ function ControlledSelect<TName extends keyof ProposalOutput>({
   control,
   options,
   error,
+  required,
 }: ControlledSelectProps<TName>) {
   return (
-    <Field label={label} error={error}>
+    <Field label={label} error={error} required={required}>
       <Controller
         control={control}
         name={name}
