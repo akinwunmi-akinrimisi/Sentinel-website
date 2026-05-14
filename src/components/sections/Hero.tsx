@@ -2,17 +2,33 @@ import Link from "next/link"
 import { FadeUp } from "@/components/motion/FadeUp"
 import { LineReveal } from "@/components/motion/LineReveal"
 import { StatCounter } from "@/components/motion/StatCounter"
+import type { CompanyStats } from "@/lib/sanity/types"
 
-const HERO_STATS = [
-  { value: 96, suffix: "%", label: "First-Attempt Pass Rate" },
-  { value: 410, suffix: "", label: "Professionals Certified" },
-  { value: 63, suffix: "", label: "Enterprise Clients" },
-  { value: 38, suffix: "", label: "Compliance Audits Passed" },
-] as const
+interface HeroProps {
+  /** Drives the stat pillar (right column). */
+  stats: CompanyStats
+  /** Outlet names rendered in the "AS FEATURED IN" band. */
+  pressOutlets: string[]
+}
 
-const PRESS_OUTLETS = ["SC Magazine", "Dark Reading", "CyberScoop"] as const
+interface HeroStat {
+  value: number
+  suffix: string
+  label: string
+}
 
-export function Hero() {
+function buildPillar(stats: CompanyStats): HeroStat[] {
+  return [
+    { value: stats.passRate, suffix: "%", label: "First-Attempt Pass Rate" },
+    { value: stats.professionalsCertified, suffix: "", label: "Professionals Certified" },
+    { value: stats.enterpriseClients, suffix: "", label: "Enterprise Clients" },
+    { value: stats.auditsPassed, suffix: "", label: "Compliance Audits Passed" },
+  ]
+}
+
+export function Hero({ stats, pressOutlets }: HeroProps) {
+  const pillar = buildPillar(stats)
+
   return (
     <section
       aria-labelledby="hero-headline"
@@ -62,22 +78,24 @@ export function Hero() {
               </div>
             </FadeUp>
 
-            <FadeUp delay={0.85}>
-              <div className="mt-12 pt-6 border-t border-[var(--color-border)] flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[0.6875rem] uppercase tracking-[0.15em]">
-                <span className="text-[var(--color-text-muted)] opacity-70">As featured in</span>
-                {PRESS_OUTLETS.map((outlet) => (
-                  <span key={outlet} className="text-[var(--color-text-secondary)]">
-                    {outlet}
-                  </span>
-                ))}
-              </div>
-            </FadeUp>
+            {pressOutlets.length > 0 && (
+              <FadeUp delay={0.85}>
+                <div className="mt-12 pt-6 border-t border-[var(--color-border)] flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[0.6875rem] uppercase tracking-[0.15em]">
+                  <span className="text-[var(--color-text-muted)] opacity-70">As featured in</span>
+                  {pressOutlets.map((outlet) => (
+                    <span key={outlet} className="text-[var(--color-text-secondary)]">
+                      {outlet}
+                    </span>
+                  ))}
+                </div>
+              </FadeUp>
+            )}
           </div>
 
           {/* Right column — stat pillar */}
           <FadeUp delay={0.3} className="md:pt-2">
             <ul aria-label="Sentinel Institute outcomes">
-              {HERO_STATS.map((stat, i) => (
+              {pillar.map((stat, i) => (
                 <li
                   key={stat.label}
                   className={
