@@ -3,13 +3,21 @@ import imageUrlBuilder from '@sanity/image-url'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
 if (!projectId) {
-  throw new Error(
-    '[sanity] NEXT_PUBLIC_SANITY_PROJECT_ID is not set. Did you run `pnpm dlx sanity@latest init`?'
+  // Dev: surface misconfiguration loudly. Prod: degrade gracefully — safeFetch
+  // in queries.ts catches the Sanity client's downstream error, and the page
+  // falls back to constants in fallbacks.ts (spec §7 — page never returns 500).
+  if (process.env.NODE_ENV !== 'production') {
+    throw new Error(
+      '[sanity] NEXT_PUBLIC_SANITY_PROJECT_ID is not set. Did you run `pnpm dlx sanity@latest init`?'
+    )
+  }
+  console.error(
+    '[sanity] NEXT_PUBLIC_SANITY_PROJECT_ID is not set in production — page will render fallback constants from src/lib/sanity/fallbacks.ts.'
   )
 }
 
 const SHARED: Pick<ClientConfig, 'projectId' | 'dataset' | 'apiVersion'> = {
-  projectId,
+  projectId: projectId ?? '',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
   apiVersion: '2024-10-01',
 }
