@@ -11,7 +11,7 @@ import type {
   ProgramPage,
   Testimonial,
 } from './types'
-import { FALLBACK_INDUSTRIES, FALLBACK_PROGRAMS } from './fallbacks'
+import { FALLBACK_CASE_STUDY, FALLBACK_INDUSTRIES, FALLBACK_PROGRAMS } from './fallbacks'
 
 /* -----------------------------------------------------------------------------
  * GROQ strings — centralized per spec §6.10
@@ -95,6 +95,26 @@ export const allIndustryDetailsQuery = groq`
 
 export const industryBySlugQuery = groq`
   *[_type == "industryPage" && slug.current == $slug][0]{ ${INDUSTRY_DETAIL_FIELDS} }
+`
+
+const CASE_STUDY_DETAIL_FIELDS = `
+  _id, "slug": slug.current,
+  clientIndustry, clientIndustryAnonymized, complianceDriver,
+  teamSize, weeksToCertification, certificationsPassed,
+  buyerName, buyerTitle,
+  "buyerHeadshot": { "url": buyerHeadshot.asset->url, "alt": buyerHeadshot.alt },
+  buyerQuote, challenge, solution, outcome, outcomeMetrics,
+  timeline, roi,
+  "clientLogo": clientLogo{ "url": asset->url, "alt": alt },
+  publishedDate, featured
+`
+
+export const allCaseStudiesQuery = groq`
+  *[_type == "caseStudy"] | order(publishedDate desc){ ${CASE_STUDY_DETAIL_FIELDS} }
+`
+
+export const caseStudyBySlugQuery = groq`
+  *[_type == "caseStudy" && slug.current == $slug][0]{ ${CASE_STUDY_DETAIL_FIELDS} }
 `
 
 export const homepageIndustriesQuery = groq`
@@ -241,4 +261,33 @@ export async function fetchIndustryBySlug(slug: string): Promise<IndustryPage | 
     }
   }
   return FALLBACK_INDUSTRIES.find((p) => p.slug === slug) ?? null
+}
+
+/**
+ * Returns all case studies ordered by publishedDate desc. Falls back to the
+ * seed constant if Sanity is unreachable or returns an empty array.
+ */
+export async function fetchAllCaseStudies(): Promise<CaseStudy[]> {
+  const data = await safeFetch<CaseStudy[]>(allCaseStudiesQuery, [])
+  return data.length > 0 ? data : [FALLBACK_CASE_STUDY]
+}
+
+/**
+ * Returns a single case study by slug, or null if the slug is unknown.
+ * Tries Sanity first, falls back to the matching seed constant.
+ */
+export async function fetchCaseStudyBySlug(slug: string): Promise<CaseStudy | null> {
+  try {
+    const data = await sanityClient.fetch<CaseStudy | null>(
+      caseStudyBySlugQuery,
+      { slug },
+      { next: { tags: ['caseStudy', `caseStudy:${slug}`] } },
+    )
+    if (data) return data
+  } catch (error) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('[sanity] fetchCaseStudyBySlug failed:', slug, error)
+    }
+  }
+  return FALLBACK_CASE_STUDY.slug === slug ? FALLBACK_CASE_STUDY : null
 }
