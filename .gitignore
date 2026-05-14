@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .superpowers/
+
+# qa smoke artifacts (screenshots + report.json regenerate on every run)
+/docs/qa-smoke/
