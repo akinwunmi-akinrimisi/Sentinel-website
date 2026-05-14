@@ -45,7 +45,7 @@ export function RelatedPrograms({ current, all }: RelatedProgramsProps) {
             <Link
               key={program.slug}
               href={`/programs/${program.slug}`}
-              className="card-dark flex flex-col gap-4 hover:border-[var(--color-accent-light)] transition-colors"
+              className="card-dark flex flex-col gap-4 hover:border-[var(--color-accent-light)]"
               data-cta="related-program"
               data-program={program.slug}
             >
@@ -57,10 +57,7 @@ export function RelatedPrograms({ current, all }: RelatedProgramsProps) {
                   {priceFormatter.format(program.priceUSD)}
                 </p>
               </header>
-              <h3
-                className="font-display font-medium leading-[1.2] text-[var(--color-text-primary)]"
-                style={{ fontSize: "1.25rem" }}
-              >
+              <h3 className="font-display font-medium leading-[1.2] text-[var(--color-text-primary)] text-[1.25rem]">
                 {program.eyebrow}
               </h3>
               <p className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-[var(--color-text-muted)] mt-auto pt-2">
