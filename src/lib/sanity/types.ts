@@ -103,7 +103,7 @@ export interface IndustryPage {
   complianceMandate: string
   complianceMandateFull: string
   trainingContext: PortableTextBlock[]
-  featuredCaseStudy?: { _ref: string; slug: string }
+  featuredCaseStudy?: { id: string; slug: string }
   homepageOrder: number
   seoTitle: string
   seoDescription: string

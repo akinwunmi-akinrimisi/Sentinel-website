@@ -61,7 +61,7 @@ export const homepageIndustriesQuery = groq`
   *[_type == "industryPage"] | order(homepageOrder asc)[0..5]{
     _id, "slug": slug.current, industryName,
     complianceMandate, complianceMandateFull, trainingContext,
-    "featuredCaseStudy": featuredCaseStudy->{ _ref: _id, "slug": slug.current },
+    "featuredCaseStudy": featuredCaseStudy->{ "id": _id, "slug": slug.current },
     homepageOrder, seoTitle, seoDescription
   }
 `

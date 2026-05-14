@@ -1,8 +1,15 @@
 import { createClient, type ClientConfig } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
+if (!projectId) {
+  throw new Error(
+    '[sanity] NEXT_PUBLIC_SANITY_PROJECT_ID is not set. Did you run `pnpm dlx sanity@latest init`?'
+  )
+}
+
 const SHARED: Pick<ClientConfig, 'projectId' | 'dataset' | 'apiVersion'> = {
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  projectId,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
   apiVersion: '2024-10-01',
 }
