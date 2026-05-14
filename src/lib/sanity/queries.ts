@@ -11,7 +11,7 @@ import type {
   ProgramPage,
   Testimonial,
 } from './types'
-import { FALLBACK_PROGRAMS } from './fallbacks'
+import { FALLBACK_INDUSTRIES, FALLBACK_PROGRAMS } from './fallbacks'
 
 /* -----------------------------------------------------------------------------
  * GROQ strings — centralized per spec §6.10
@@ -72,6 +72,29 @@ export const allProgramDetailsQuery = groq`
 
 export const programBySlugQuery = groq`
   *[_type == "programPage" && slug.current == $slug][0]{ ${PROGRAM_DETAIL_FIELDS} }
+`
+
+const INDUSTRY_DETAIL_FIELDS = `
+  _id, "slug": slug.current, industryName,
+  complianceMandate, complianceMandateFull, trainingContext,
+  complianceClauses, riskScenarios, recommendedProgramSlugs,
+  "featuredCaseStudy": featuredCaseStudy->{
+    _id, "slug": slug.current,
+    clientIndustry, clientIndustryAnonymized, complianceDriver,
+    teamSize, weeksToCertification, certificationsPassed,
+    buyerName, buyerTitle,
+    "buyerHeadshot": { "url": buyerHeadshot.asset->url, "alt": buyerHeadshot.alt },
+    buyerQuote, outcomeMetrics
+  },
+  homepageOrder, seoTitle, seoDescription
+`
+
+export const allIndustryDetailsQuery = groq`
+  *[_type == "industryPage"] | order(homepageOrder asc){ ${INDUSTRY_DETAIL_FIELDS} }
+`
+
+export const industryBySlugQuery = groq`
+  *[_type == "industryPage" && slug.current == $slug][0]{ ${INDUSTRY_DETAIL_FIELDS} }
 `
 
 export const homepageIndustriesQuery = groq`
@@ -188,4 +211,34 @@ export async function fetchProgramBySlug(slug: string): Promise<ProgramPage | nu
     }
   }
   return FALLBACK_PROGRAMS.find((p) => p.slug === slug) ?? null
+}
+
+/**
+ * Returns all 6 industries with full detail fields. Used by /industries index
+ * + detail pages. Uses the length-check fallback pattern from PR 10's
+ * fetchAllPrograms — Sanity returning [] still falls back to seed constants.
+ */
+export async function fetchAllIndustries(): Promise<IndustryPage[]> {
+  const data = await safeFetch<IndustryPage[]>(allIndustryDetailsQuery, [])
+  return data.length > 0 ? data : FALLBACK_INDUSTRIES
+}
+
+/**
+ * Returns a single industry by slug, or null if the slug is unknown.
+ * Tries Sanity first, falls back to the matching seed constant.
+ */
+export async function fetchIndustryBySlug(slug: string): Promise<IndustryPage | null> {
+  try {
+    const data = await sanityClient.fetch<IndustryPage | null>(
+      industryBySlugQuery,
+      { slug },
+      { next: { tags: ['industryPage', `industryPage:${slug}`] } },
+    )
+    if (data) return data
+  } catch (error) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('[sanity] fetchIndustryBySlug failed:', slug, error)
+    }
+  }
+  return FALLBACK_INDUSTRIES.find((p) => p.slug === slug) ?? null
 }
