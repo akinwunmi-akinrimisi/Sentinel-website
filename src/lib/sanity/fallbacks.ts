@@ -2,6 +2,7 @@ import type {
   CaseStudy,
   ClientLogo,
   CompanyStats,
+  Faq,
   IndustryPage,
   PressMention,
   ProgramPage,
@@ -314,5 +315,100 @@ export const FALLBACK_INDUSTRIES: IndustryPage[] = [
     homepageOrder: 5,
     seoTitle: 'Security Training for Law Firms | Sentinel Institute',
     seoDescription: 'Cybersecurity certification training calibrated to ABA Model Rule 1.6(c) confidentiality obligations.',
+  },
+]
+
+export const FALLBACK_FAQS: Faq[] = [
+  {
+    _id: 'fallback-faq-1',
+    question: 'Do you offer a pass guarantee?',
+    answer: [
+      {
+        _type: 'block',
+        _key: 'faq1-1',
+        style: 'normal',
+        markDefs: [],
+        children: [
+          {
+            _type: 'span',
+            _key: 'faq1-1-s1',
+            text: 'Yes. Every Sentinel Institute contract includes a no-pass, re-train clause: any participant who does not pass on the first attempt is re-enrolled in the next cohort at no additional cost.',
+            marks: [],
+          },
+        ],
+      },
+    ],
+    category: 'general',
+    featured: true,
+    order: 0,
+  },
+  {
+    _id: 'fallback-faq-2',
+    question: 'How long does a typical cohort take?',
+    answer: [
+      {
+        _type: 'block',
+        _key: 'faq2-1',
+        style: 'normal',
+        markDefs: [],
+        children: [
+          {
+            _type: 'span',
+            _key: 'faq2-1-s1',
+            text: 'Security+ runs 8 weeks, CySA+ runs 10 weeks, and CASP+ runs 12 weeks. We hold three 2-hour live sessions per week, recorded for asynchronous access if a participant misses a session.',
+            marks: [],
+          },
+        ],
+      },
+    ],
+    category: 'logistics',
+    featured: true,
+    order: 1,
+  },
+  {
+    _id: 'fallback-faq-3',
+    question: 'What does pricing look like for a 25-person cohort?',
+    answer: [
+      {
+        _type: 'block',
+        _key: 'faq3-1',
+        style: 'normal',
+        markDefs: [],
+        children: [
+          {
+            _type: 'span',
+            _key: 'faq3-1-s1',
+            text: 'Per-seat pricing scales down with cohort size and certification track. A 25-person Security+ cohort lands in the high five figures; we send a tailored proposal within one business day of your request.',
+            marks: [],
+          },
+        ],
+      },
+    ],
+    category: 'pricing',
+    featured: true,
+    order: 2,
+  },
+  {
+    _id: 'fallback-faq-4',
+    question: 'Will this satisfy our compliance auditor?',
+    answer: [
+      {
+        _type: 'block',
+        _key: 'faq4-1',
+        style: 'normal',
+        markDefs: [],
+        children: [
+          {
+            _type: 'span',
+            _key: 'faq4-1-s1',
+            text: 'We provide named, dated certification artifacts mapped to the specific compliance framework you are audited against — HIPAA, PCI-DSS, CMMC, SOC 2, NIST CSF, NERC CIP. Auditors have accepted our documentation on every engagement to date.',
+            marks: [],
+          },
+        ],
+      },
+    ],
+    category: 'compliance',
+    featured: true,
+    order: 3,
   },
 ]
