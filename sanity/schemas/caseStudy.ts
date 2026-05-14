@@ -167,6 +167,33 @@ export const caseStudy = defineType({
       title: 'Featured on homepage',
       initialValue: false,
     }),
+    defineField({
+      name: 'timeline',
+      type: 'array',
+      title: 'Timeline milestones',
+      description: '3–7 chronological milestones from initial contact to outcome.',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'timelineMilestone',
+          fields: [
+            defineField({ name: 'date', type: 'string', description: 'YYYY-MM format', validation: (Rule) => Rule.required().regex(/^\d{4}-\d{2}$/, { name: 'YYYY-MM' }) }),
+            defineField({ name: 'headline', type: 'string', validation: (Rule) => Rule.required().max(80) }),
+            defineField({ name: 'description', type: 'text', rows: 3, validation: (Rule) => Rule.required().max(300) }),
+          ],
+          preview: { select: { title: 'headline', subtitle: 'date' } },
+        }),
+      ],
+      validation: (Rule) => Rule.required().min(3).max(7),
+    }),
+    defineField({
+      name: 'roi',
+      type: 'text',
+      title: 'ROI statement',
+      description: 'Single 1–3 sentence statement quantifying the financial or risk impact.',
+      rows: 4,
+      validation: (Rule) => Rule.required().max(500),
+    }),
   ],
   preview: {
     select: { industry: 'clientIndustry', driver: 'complianceDriver', featured: 'featured' },
