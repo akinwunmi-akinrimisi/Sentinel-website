@@ -2,11 +2,10 @@
 import Link from "next/link"
 
 const NAV_LINKS = [
-  { href: "/programs", label: "Programs" },
-  { href: "/industries", label: "Industries" },
-  { href: "/results", label: "Results" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/about", label: "About" },
+  { href: "/#programs", label: "Programs" },
+  { href: "/#industries", label: "Industries" },
+  { href: "/#results", label: "Results" },
+  { href: "/#faq", label: "FAQ" },
 ] as const
 
 export function Header() {
