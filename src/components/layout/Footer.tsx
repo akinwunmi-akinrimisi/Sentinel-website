@@ -8,7 +8,7 @@ const NAV_COLUMNS = [
       { href: "/programs/security-plus", label: "CompTIA Security+" },
       { href: "/programs/cysa-plus", label: "CompTIA CySA+" },
       { href: "/programs/casp-plus", label: "CompTIA CASP+" },
-      { href: "/programs", label: "All Programs" },
+      { href: "/#programs", label: "All Programs" },
     ],
   },
   {
@@ -17,15 +17,14 @@ const NAV_COLUMNS = [
       { href: "/industries/financial-services", label: "Financial Services" },
       { href: "/industries/healthcare", label: "Healthcare" },
       { href: "/industries/government-defense", label: "Government & Defense" },
-      { href: "/industries", label: "All Industries" },
+      { href: "/#industries", label: "All Industries" },
     ],
   },
   {
     heading: "Company",
     links: [
-      { href: "/about", label: "About" },
-      { href: "/results", label: "Case Studies" },
-      { href: "/faq", label: "FAQ" },
+      { href: "/#results", label: "Case Studies" },
+      { href: "/#faq", label: "FAQ" },
       { href: "/contact", label: "Contact" },
     ],
   },
