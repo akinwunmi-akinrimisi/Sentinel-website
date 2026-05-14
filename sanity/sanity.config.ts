@@ -21,6 +21,15 @@ const listableDocs = [
   'clientLogo',
 ]
 
+/**
+ * Turns a Sanity schema type name like `caseStudy` into a Studio-friendly
+ * label like `Case study`. Splits at lowercase→uppercase boundaries.
+ */
+const humanizeTypeName = (typeName: string): string => {
+  const spaced = typeName.replace(/([A-Z])/g, ' $1').trim()
+  return spaced.charAt(0).toUpperCase() + spaced.slice(1)
+}
+
 export default defineConfig({
   name: 'sentinel-institute',
   title: 'Sentinel Institute CMS',
@@ -46,9 +55,7 @@ export default defineConfig({
             S.divider(),
             // List types
             ...listableDocs.map((typeName) =>
-              S.documentTypeListItem(typeName).title(
-                typeName.charAt(0).toUpperCase() + typeName.slice(1)
-              )
+              S.documentTypeListItem(typeName).title(humanizeTypeName(typeName))
             ),
           ]),
     }),
@@ -61,7 +68,7 @@ export default defineConfig({
       templates.filter(({ schemaType }) => !singletonDocs.includes(schemaType)),
   },
   document: {
-    // Strip duplicate + delete from singleton docs.
+    // Strip duplicate, delete, and unpublish from singleton docs.
     actions: (prev, { schemaType }) =>
       singletonDocs.includes(schemaType)
         ? prev.filter(
