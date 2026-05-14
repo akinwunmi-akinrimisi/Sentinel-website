@@ -1,17 +1,13 @@
 import { FadeUp } from "@/components/motion/FadeUp"
 
-const CLIENT_INDUSTRIES = [
-  "Regional Bank, Midwest",
-  "Health System, Northeast",
-  "Defense Contractor, Mid-Atlantic",
-  "Insurance Carrier, Southeast",
-  "Utility, Pacific Northwest",
-  "Law Firm, AmLaw 200",
-  "Pharmaceutical, Top 25",
-  "Financial Services, Big Four",
-] as const
+interface TrustBarProps {
+  /** Total enterprise clients certified — drives the right-side caption. */
+  enterpriseClients: number
+  /** Labels for the client strip. Pass anonymized labels for industry-text mode. */
+  clientLabels: string[]
+}
 
-export function TrustBar() {
+export function TrustBar({ enterpriseClients, clientLabels }: TrustBarProps) {
   return (
     <section
       aria-label="Trusted by"
@@ -38,23 +34,25 @@ export function TrustBar() {
             </div>
 
             {/* Client industries strip */}
-            <ul
-              aria-label="Clients"
-              className="flex-1 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-[var(--color-text-muted)]"
-            >
-              {CLIENT_INDUSTRIES.map((industry) => (
-                <li
-                  key={industry}
-                  className="transition-colors hover:text-[var(--color-text-secondary)]"
-                >
-                  {industry}
-                </li>
-              ))}
-            </ul>
+            {clientLabels.length > 0 && (
+              <ul
+                aria-label="Clients"
+                className="flex-1 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-[var(--color-text-muted)]"
+              >
+                {clientLabels.map((label) => (
+                  <li
+                    key={label}
+                    className="transition-colors hover:text-[var(--color-text-secondary)]"
+                  >
+                    {label}
+                  </li>
+                ))}
+              </ul>
+            )}
 
-            {/* Right-side caption */}
+            {/* Right-side caption — uses live count */}
             <p className="md:max-w-[26ch] font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-[var(--color-text-secondary)] md:text-right shrink-0">
-              63 enterprise clients certified across 11 regulated industries
+              {enterpriseClients} enterprise clients certified across 11 regulated industries
             </p>
           </div>
         </FadeUp>
