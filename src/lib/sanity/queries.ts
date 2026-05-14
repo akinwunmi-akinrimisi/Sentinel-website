@@ -11,6 +11,7 @@ import type {
   ProgramPage,
   Testimonial,
 } from './types'
+import { FALLBACK_PROGRAMS } from './fallbacks'
 
 /* -----------------------------------------------------------------------------
  * GROQ strings — centralized per spec §6.10
@@ -55,6 +56,22 @@ export const allProgramsQuery = groq`
     whoNeedsIt, curriculumOutline, examObjectives,
     homepageOrder, seoTitle, seoDescription
   }
+`
+
+const PROGRAM_DETAIL_FIELDS = `
+  _id, "slug": slug.current, certName, eyebrow, oneliner,
+  priceUSD, durationWeeks, sessionsPerWeek,
+  whoNeedsIt, curriculumOutline, examObjectives,
+  outcomes, sampleLesson, comparisonSelfStudy,
+  homepageOrder, seoTitle, seoDescription
+`
+
+export const allProgramDetailsQuery = groq`
+  *[_type == "programPage"] | order(homepageOrder asc){ ${PROGRAM_DETAIL_FIELDS} }
+`
+
+export const programBySlugQuery = groq`
+  *[_type == "programPage" && slug.current == $slug][0]{ ${PROGRAM_DETAIL_FIELDS} }
 `
 
 export const homepageIndustriesQuery = groq`
@@ -141,4 +158,33 @@ export async function fetchHomepageData(): Promise<HomepageData> {
     heroPress,
     clientLogos,
   }
+}
+
+/**
+ * Returns all 3 programs with full detail fields. Used by the /programs index
+ * page and by RelatedPrograms on detail pages. Falls back to seed constants if
+ * Sanity is unreachable or empty.
+ */
+export async function fetchAllPrograms(): Promise<ProgramPage[]> {
+  return safeFetch<ProgramPage[]>(allProgramDetailsQuery, FALLBACK_PROGRAMS)
+}
+
+/**
+ * Returns a single program by slug, or null if the slug is unknown.
+ * Tries Sanity first, then falls back to the matching seed constant.
+ */
+export async function fetchProgramBySlug(slug: string): Promise<ProgramPage | null> {
+  try {
+    const data = await sanityClient.fetch<ProgramPage | null>(
+      programBySlugQuery,
+      { slug },
+      { next: { tags: ['programPage', `programPage:${slug}`] } },
+    )
+    if (data) return data
+  } catch (error) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('[sanity] fetchProgramBySlug failed:', slug, error)
+    }
+  }
+  return FALLBACK_PROGRAMS.find((p) => p.slug === slug) ?? null
 }
