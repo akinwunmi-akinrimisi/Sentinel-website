@@ -8,12 +8,15 @@ import { ResultsByProgram } from "@/components/sections/ResultsByProgram"
 import { CaseStudyFeature } from "@/components/sections/CaseStudyFeature"
 import { Testimonials } from "@/components/sections/Testimonials"
 import { IndustriesServed } from "@/components/sections/IndustriesServed"
+import { ProposalCTA } from "@/components/sections/ProposalCTA"
+import { FAQPreview } from "@/components/sections/FAQPreview"
 import { fetchHomepageData } from "@/lib/sanity/queries"
 import { portableTextToPlain } from "@/lib/sanity/portable-text"
 import {
   FALLBACK_CASE_STUDY,
   FALLBACK_CLIENT_LOGOS,
   FALLBACK_COMPANY_STATS,
+  FALLBACK_FAQS,
   FALLBACK_HERO_PRESS,
   FALLBACK_INDUSTRIES,
   FALLBACK_PROGRAMS,
@@ -62,6 +65,8 @@ export default async function HomePage() {
     ? data.homepageIndustries
     : FALLBACK_INDUSTRIES
 
+  const faqs = data.homepageFAQs.length > 0 ? data.homepageFAQs : FALLBACK_FAQS
+
   return (
     <>
       <Hero stats={stats} pressOutlets={pressOutlets} />
@@ -76,6 +81,8 @@ export default async function HomePage() {
       <CaseStudyFeature caseStudy={caseStudy} />
       <Testimonials testimonials={testimonials} />
       <IndustriesServed industries={industries} />
+      <ProposalCTA availableSlots={stats.availableSlots} />
+      <FAQPreview faqs={faqs} />
     </>
   )
 }
