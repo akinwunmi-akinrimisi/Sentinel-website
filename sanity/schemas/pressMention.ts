@@ -60,7 +60,7 @@ export const pressMention = defineType({
     }),
   ],
   preview: {
-    select: { outlet: 'outletName', title: 'articleTitle' },
-    prepare: ({ outlet, title }) => ({ title: outlet, subtitle: title }),
+    select: { outlet: 'outletName', articleTitle: 'articleTitle' },
+    prepare: ({ outlet, articleTitle }) => ({ title: outlet, subtitle: articleTitle }),
   },
 })
