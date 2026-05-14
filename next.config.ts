@@ -6,7 +6,7 @@ const ContentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://cdn.sanity.io https://www.google-analytics.com https://www.googletagmanager.com",
   "font-src 'self'",
-  "connect-src 'self' https://api.stripe.com https://www.google-analytics.com https://*.sanity.io",
+  "connect-src 'self' https://api.stripe.com https://www.google-analytics.com https://*.sanity.io https://www.google.com",
   "frame-src https://js.stripe.com https://cal.com",
   "object-src 'none'",
   "base-uri 'self'",
