@@ -166,7 +166,8 @@ export async function fetchHomepageData(): Promise<HomepageData> {
  * Sanity is unreachable or empty.
  */
 export async function fetchAllPrograms(): Promise<ProgramPage[]> {
-  return safeFetch<ProgramPage[]>(allProgramDetailsQuery, FALLBACK_PROGRAMS)
+  const data = await safeFetch<ProgramPage[]>(allProgramDetailsQuery, [])
+  return data.length > 0 ? data : FALLBACK_PROGRAMS
 }
 
 /**
