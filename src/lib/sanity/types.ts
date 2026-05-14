@@ -96,6 +96,23 @@ export interface ProgramPage {
   seoDescription: string
 }
 
+/**
+ * Shape passed into <ProgramsOverview>. Derived in (marketing)/page.tsx from
+ * each ProgramPage by extracting plain text from `whoNeedsIt`. The card never
+ * touches the full Portable Text — keeps the section a server component
+ * without any Sanity-specific rendering.
+ */
+export interface ProgramCardData {
+  slug: ProgramSlug
+  certName: string
+  eyebrow: string
+  oneliner: string
+  priceUSD: number
+  durationWeeks: number
+  sessionsPerWeek: number
+  whoNeedsItSummary: string
+}
+
 export interface IndustryPage {
   _id: string
   slug: string
