@@ -86,7 +86,7 @@ const SENTINEL_VS_SELF_STUDY: ComparisonRow[] = [
   { category: 'Schedule', sentinel: 'Live instructor-led cohort, 2–3 sessions per week, fixed start dates', selfStudy: 'Self-paced — completion timing on the learner, no fixed milestones' },
   { category: 'Live instruction', sentinel: 'Working sessions on real declassified breach scenarios with senior instructors', selfStudy: 'Video recordings and PDF study guides only — no live interaction' },
   { category: 'Practice incidents', sentinel: '12 end-to-end incident scenarios worked in pairs across the cohort', selfStudy: 'Multiple-choice exam prep questions only — no scenario work' },
-  { category: 'Pass guarantee', sentinel: 'No-pass, re-train at no cost — built into every enterprise contract', selfStudy: "None — re-take fees are the learner's responsibility" },
+  { category: 'Pass guarantee', sentinel: 'No-pass, re-train at no cost — built into every enterprise contract', selfStudy: "None — re-take fees are the learner’s responsibility" },
   { category: 'Compliance documentation', sentinel: 'Audit-ready training records + certificate package signed by Sentinel', selfStudy: 'Pearson VUE certificate copy only — no training audit trail' },
   { category: 'Cohort cap', sentinel: '12 learners maximum per cohort — instructor knows every team', selfStudy: 'N/A — individual study, no cohort' },
 ]
@@ -209,7 +209,7 @@ export const FALLBACK_PROGRAMS: ProgramPage[] = [
     comparisonSelfStudy: SENTINEL_VS_SELF_STUDY,
     homepageOrder: 0,
     seoTitle: 'CompTIA Security+ Certification Training | Sentinel Institute',
-    seoDescription: "Sentinel Institute's Security+ training program — 8-week instructor-led path with documented first-attempt pass rate.",
+    seoDescription: "Sentinel Institute’s Security+ training program — 8-week instructor-led path with documented first-attempt pass rate.",
   },
   {
     _id: 'fallback-program-cysa-plus',
@@ -447,11 +447,11 @@ export const FALLBACK_INDUSTRIES: IndustryPage[] = [
     trainingContext: [
       {
         _type: 'block', _key: 'h-tc-1', style: 'normal', markDefs: [],
-        children: [{ _type: 'span', _key: 'h-tc-1-s1', text: "Healthcare CISOs operate under the HIPAA Security Rule, which audits the entire workforce for trained-and-certified incident-response capability. A failed audit isn't a finding — it's a settlement with the Office for Civil Rights.", marks: [] }],
+        children: [{ _type: 'span', _key: 'h-tc-1-s1', text: "Healthcare CISOs operate under the HIPAA Security Rule, which audits the entire workforce for trained-and-certified incident-response capability. A failed audit isn’t a finding — it’s a settlement with the Office for Civil Rights.", marks: [] }],
       },
       {
         _type: 'block', _key: 'h-tc-2', style: 'normal', markDefs: [],
-        children: [{ _type: 'span', _key: 'h-tc-2-s1', text: "Sentinel's healthcare cohorts walk the OCR enforcement record: every breach scenario in the curriculum maps to a real Resolution Agreement, with the specific control failure cited. Your team finishes the program able to produce the audit-ready evidence package OCR investigators expect.", marks: [] }],
+        children: [{ _type: 'span', _key: 'h-tc-2-s1', text: "Sentinel’s healthcare cohorts walk the OCR enforcement record: every breach scenario in the curriculum maps to a real Resolution Agreement, with the specific control failure cited. Your team finishes the program able to produce the audit-ready evidence package OCR investigators expect.", marks: [] }],
       },
     ],
     complianceClauses: [
@@ -483,7 +483,7 @@ export const FALLBACK_INDUSTRIES: IndustryPage[] = [
       },
       {
         _type: 'block', _key: 'f-tc-2', style: 'normal', markDefs: [],
-        children: [{ _type: 'span', _key: 'f-tc-2-s1', text: "Sentinel's financial-services cohorts run on actual cardholder-data flow diagrams. Your team learns to defend the segments under audit — POI devices, tokenization vaults, and the cardholder-data environment boundary — not abstract textbook scenarios.", marks: [] }],
+        children: [{ _type: 'span', _key: 'f-tc-2-s1', text: "Sentinel’s financial-services cohorts run on actual cardholder-data flow diagrams. Your team learns to defend the segments under audit — POI devices, tokenization vaults, and the cardholder-data environment boundary — not abstract textbook scenarios.", marks: [] }],
       },
     ],
     complianceClauses: [
@@ -494,7 +494,7 @@ export const FALLBACK_INDUSTRIES: IndustryPage[] = [
     ] as ComplianceClause[],
     riskScenarios: [
       { headline: 'QSA finding, 2023 — repeat assessment', narrative: 'A mid-tier acquirer received a non-compliant report after auditors found that 70% of the security team had no documented role-based training. The acquirer was held in non-compliance for two assessment cycles before remediation completed.' },
-      { headline: 'OFAC fine, 2024 — $48M', narrative: "A bank's payment processing platform was breached via a misconfigured tokenization service. The IR team had not been trained on the specific tokenization vendor's incident workflow. OFAC cited the lapse in its civil monetary penalty." },
+      { headline: 'OFAC fine, 2024 — $48M', narrative: "A bank’s payment processing platform was breached via a misconfigured tokenization service. The IR team had not been trained on the specific tokenization vendor’s incident workflow. OFAC cited the lapse in its civil monetary penalty." },
     ] as RiskScenario[],
     recommendedProgramSlugs: ['security-plus', 'cysa-plus'],
     homepageOrder: 1,
@@ -511,11 +511,11 @@ export const FALLBACK_INDUSTRIES: IndustryPage[] = [
     trainingContext: [
       {
         _type: 'block', _key: 'd-tc-1', style: 'normal', markDefs: [],
-        children: [{ _type: 'span', _key: 'd-tc-1-s1', text: "CMMC Level 2 is enforcement, not aspiration: contractors handling Controlled Unclassified Information must certify named, qualified security personnel before primes will issue subcontracts. The DoD CIO's 2024 guidance made the standard binding on every solicitation involving CUI.", marks: [] }],
+        children: [{ _type: 'span', _key: 'd-tc-1-s1', text: "CMMC Level 2 is enforcement, not aspiration: contractors handling Controlled Unclassified Information must certify named, qualified security personnel before primes will issue subcontracts. The DoD CIO’s 2024 guidance made the standard binding on every solicitation involving CUI.", marks: [] }],
       },
       {
         _type: 'block', _key: 'd-tc-2', style: 'normal', markDefs: [],
-        children: [{ _type: 'span', _key: 'd-tc-2-s1', text: "Sentinel's defense cohorts work the NIST SP 800-171 control families end-to-end with current C3PAO assessor expectations. Your team finishes with the artifacts a CMMC assessor needs: training records, role assignments, and incident-response evidence keyed to specific controls.", marks: [] }],
+        children: [{ _type: 'span', _key: 'd-tc-2-s1', text: "Sentinel’s defense cohorts work the NIST SP 800-171 control families end-to-end with current C3PAO assessor expectations. Your team finishes with the artifacts a CMMC assessor needs: training records, role assignments, and incident-response evidence keyed to specific controls.", marks: [] }],
       },
     ],
     complianceClauses: [
@@ -547,7 +547,7 @@ export const FALLBACK_INDUSTRIES: IndustryPage[] = [
       },
       {
         _type: 'block', _key: 'u-tc-2', style: 'normal', markDefs: [],
-        children: [{ _type: 'span', _key: 'u-tc-2-s1', text: "Sentinel's utility cohorts include OT-aware curriculum: SCADA, ICS, and field-asset attack scenarios alongside the enterprise certification path. Your team learns to defend the operational technology that traditional security training doesn't cover.", marks: [] }],
+        children: [{ _type: 'span', _key: 'u-tc-2-s1', text: "Sentinel’s utility cohorts include OT-aware curriculum: SCADA, ICS, and field-asset attack scenarios alongside the enterprise certification path. Your team learns to defend the operational technology that traditional security training doesn’t cover.", marks: [] }],
       },
     ],
     complianceClauses: [
@@ -579,7 +579,7 @@ export const FALLBACK_INDUSTRIES: IndustryPage[] = [
       },
       {
         _type: 'block', _key: 'i-tc-2', style: 'normal', markDefs: [],
-        children: [{ _type: 'span', _key: 'i-tc-2-s1', text: "Sentinel's insurance cohorts work through actuarial-grade incident scenarios: data exfiltration affecting protected health information, fraud-ring detection on claims platforms, and the regulatory notification timelines that follow.", marks: [] }],
+        children: [{ _type: 'span', _key: 'i-tc-2-s1', text: "Sentinel’s insurance cohorts work through actuarial-grade incident scenarios: data exfiltration affecting protected health information, fraud-ring detection on claims platforms, and the regulatory notification timelines that follow.", marks: [] }],
       },
     ],
     complianceClauses: [
@@ -589,8 +589,8 @@ export const FALLBACK_INDUSTRIES: IndustryPage[] = [
       { code: '§ 6(A)', title: 'Cybersecurity event notification', description: 'Notify the Commissioner as promptly as possible but no later than 72 hours from determination that a cybersecurity event has occurred.' },
     ] as ComplianceClause[],
     riskScenarios: [
-      { headline: 'NY DFS enforcement, 2023 — $7.5M', narrative: "A title insurance subsidiary was fined under New York's 23 NYCRR 500 (the NAIC Model Law's NY implementation) after a breach exposed millions of records. DFS specifically cited inadequate workforce training as one of three primary control failures." },
-      { headline: 'NAIC examination finding, 2024', narrative: "A multi-state health insurer received an adverse examination report after auditors found the IT security team's qualifications did not match the program scope. The examination required a remediation plan with named certified personnel within 6 months." },
+      { headline: 'NY DFS enforcement, 2023 — $7.5M', narrative: "A title insurance subsidiary was fined under New York’s 23 NYCRR 500 (the NAIC Model Law’s NY implementation) after a breach exposed millions of records. DFS specifically cited inadequate workforce training as one of three primary control failures." },
+      { headline: 'NAIC examination finding, 2024', narrative: "A multi-state health insurer received an adverse examination report after auditors found the IT security team’s qualifications did not match the program scope. The examination required a remediation plan with named certified personnel within 6 months." },
     ] as RiskScenario[],
     recommendedProgramSlugs: ['security-plus', 'cysa-plus'],
     homepageOrder: 4,
@@ -611,17 +611,17 @@ export const FALLBACK_INDUSTRIES: IndustryPage[] = [
       },
       {
         _type: 'block', _key: 'l-tc-2', style: 'normal', markDefs: [],
-        children: [{ _type: 'span', _key: 'l-tc-2-s1', text: "Sentinel's legal cohorts focus on the threat models law firms actually face: business email compromise targeting wire transfers, ransomware against case-management platforms, and discovery-process data spills. The curriculum aligns to ABA TechReport recommendations.", marks: [] }],
+        children: [{ _type: 'span', _key: 'l-tc-2-s1', text: "Sentinel’s legal cohorts focus on the threat models law firms actually face: business email compromise targeting wire transfers, ransomware against case-management platforms, and discovery-process data spills. The curriculum aligns to ABA TechReport recommendations.", marks: [] }],
       },
     ],
     complianceClauses: [
       { code: 'MR 1.6(c)', title: 'Confidentiality of client information', description: 'A lawyer shall make reasonable efforts to prevent the inadvertent or unauthorized disclosure of, or unauthorized access to, information relating to the representation of a client.' },
       { code: 'MR 1.1 cmt 8', title: 'Duty of competence — technology', description: 'A lawyer should keep abreast of changes in the law and its practice, including the benefits and risks associated with relevant technology.' },
-      { code: 'MR 5.3(b)', title: 'Supervision of non-lawyer assistants', description: "A lawyer having direct supervisory authority over the non-lawyer shall make reasonable efforts to ensure that the person's conduct is compatible with the professional obligations of the lawyer." },
+      { code: 'MR 5.3(b)', title: 'Supervision of non-lawyer assistants', description: "A lawyer having direct supervisory authority over the non-lawyer shall make reasonable efforts to ensure that the person’s conduct is compatible with the professional obligations of the lawyer." },
     ] as ComplianceClause[],
     riskScenarios: [
-      { headline: 'State bar disciplinary action, 2023', narrative: "A mid-sized firm partner received a formal reprimand after a paralegal misdirected privileged discovery materials. The bar opinion cited inadequate training on data-handling procedures as the basis for the partner's supervisory failure under Rule 5.3." },
-      { headline: 'Malpractice carrier non-renewal, 2024', narrative: "A 40-lawyer firm lost its cyber liability coverage after the carrier's audit found no documented workforce training program. The firm's rates tripled when it found a replacement carrier — a direct cost of the training gap." },
+      { headline: 'State bar disciplinary action, 2023', narrative: "A mid-sized firm partner received a formal reprimand after a paralegal misdirected privileged discovery materials. The bar opinion cited inadequate training on data-handling procedures as the basis for the partner’s supervisory failure under Rule 5.3." },
+      { headline: 'Malpractice carrier non-renewal, 2024', narrative: "A 40-lawyer firm lost its cyber liability coverage after the carrier’s audit found no documented workforce training program. The firm’s rates tripled when it found a replacement carrier — a direct cost of the training gap." },
     ] as RiskScenario[],
     recommendedProgramSlugs: ['security-plus'],
     homepageOrder: 5,
