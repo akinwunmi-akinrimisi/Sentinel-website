@@ -19,6 +19,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/industries/utilities`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/industries/insurance`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/industries/legal`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    // Future PRs add /results, /about, /faq.
+    { url: `${SITE_URL}/results`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/results/healthcare-hipaa-security-plus`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    // Future PRs add /about, /faq.
   ]
 }
