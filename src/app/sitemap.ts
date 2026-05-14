@@ -12,6 +12,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/programs/security-plus`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/programs/cysa-plus`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/programs/casp-plus`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    // Future PRs add /industries, /results, /about, /faq.
+    { url: `${SITE_URL}/industries`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/industries/healthcare`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_URL}/industries/financial-services`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_URL}/industries/government-defense`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_URL}/industries/utilities`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_URL}/industries/insurance`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_URL}/industries/legal`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    // Future PRs add /results, /about, /faq.
   ]
 }
