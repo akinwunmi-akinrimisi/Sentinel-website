@@ -1,4 +1,4 @@
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextResponse, after, type NextRequest } from 'next/server'
 import { proposalSchema } from '@/lib/proposal/schema'
 import { rateLimit } from '@/lib/rate-limit'
 import { sendEmail } from '@/lib/email/resend'
@@ -34,11 +34,14 @@ async function notifySlack(payload: {
     `Driver: ${payload.complianceDriver} · Team: ${payload.teamSize} · Start: ${payload.timeline}` +
     failed
   try {
-    await fetch(url, {
+    const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text }),
     })
+    if (!res.ok) {
+      console.error('[slack] webhook returned', res.status, await res.text())
+    }
   } catch (error) {
     console.error('[slack] webhook failed:', error)
   }
@@ -50,7 +53,7 @@ async function submitToHubSpot(payload: Record<string, unknown>): Promise<boolea
   if (!portalId || !formId) return false
   try {
     const res = await fetch(
-      `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`,
+      `https://api.hsforms.com/submissions/v3/integration/submit/${encodeURIComponent(portalId)}/${encodeURIComponent(formId)}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -109,7 +112,7 @@ export async function POST(req: NextRequest) {
 
   // 4. Fan out the integrations
   const internalTo = process.env.RESEND_TO_EMAIL ?? process.env.RESEND_FROM_EMAIL ?? ''
-  const [prospectResult, internalResult] = await Promise.all([
+  const [prospectResult, internalResult, hubspotOk] = await Promise.all([
     sendEmail({
       to: payload.businessEmail,
       subject: 'We received your proposal request — Sentinel Institute',
@@ -123,41 +126,42 @@ export async function POST(req: NextRequest) {
           replyTo: payload.businessEmail,
         })
       : Promise.resolve(null),
+    submitToHubSpot({
+      firstname: payload.fullName.split(/\s+/)[0] ?? '',
+      lastname: payload.fullName.split(/\s+/).slice(1).join(' '),
+      email: payload.businessEmail,
+      phone: payload.phone,
+      company: payload.company,
+      jobtitle: payload.jobTitle,
+      company_size: payload.companySize,
+      industry: payload.industry,
+      team_size: payload.teamSize,
+      certifications_of_interest: payload.certifications,
+      compliance_driver: payload.complianceDriver,
+      timeline: payload.timeline,
+      referral_source: payload.referralSource,
+      notes: payload.notes,
+    }),
   ])
-
-  const hubspotOk = await submitToHubSpot({
-    firstname: payload.fullName.split(/\s+/)[0] ?? '',
-    lastname: payload.fullName.split(/\s+/).slice(1).join(' '),
-    email: payload.businessEmail,
-    phone: payload.phone,
-    company: payload.company,
-    jobtitle: payload.jobTitle,
-    company_size: payload.companySize,
-    industry: payload.industry,
-    team_size: payload.teamSize,
-    certifications_of_interest: payload.certifications,
-    compliance_driver: payload.complianceDriver,
-    timeline: payload.timeline,
-    referral_source: payload.referralSource,
-    notes: payload.notes,
-  })
 
   const failedSteps: string[] = []
   if (prospectResult === null && process.env.RESEND_API_KEY) failedSteps.push('prospect-email')
   if (internalResult === null && internalTo && process.env.RESEND_API_KEY) failedSteps.push('internal-email')
   if (!hubspotOk && process.env.HUBSPOT_PORTAL_ID) failedSteps.push('hubspot')
 
-  // Slack is fire-and-forget; even if it throws internally it's swallowed.
-  await notifySlack({
-    company: payload.company,
-    buyer: payload.fullName,
-    email: payload.businessEmail,
-    industry: payload.industry,
-    complianceDriver: payload.complianceDriver,
-    teamSize: payload.teamSize,
-    timeline: payload.timeline,
-    failedSteps,
-  })
+  // Slack is fire-and-forget — runs after response is flushed to client.
+  after(() =>
+    notifySlack({
+      company: payload.company,
+      buyer: payload.fullName,
+      email: payload.businessEmail,
+      industry: payload.industry,
+      complianceDriver: payload.complianceDriver,
+      teamSize: payload.teamSize,
+      timeline: payload.timeline,
+      failedSteps,
+    })
+  )
 
   return NextResponse.json({ success: true })
 }
