@@ -122,6 +122,17 @@ export interface ProgramCardData {
   whoNeedsItSummary: string
 }
 
+export interface ComplianceClause {
+  code: string
+  title: string
+  description: string
+}
+
+export interface RiskScenario {
+  headline: string
+  narrative: string
+}
+
 export interface IndustryPage {
   _id: string
   slug: string
@@ -129,7 +140,10 @@ export interface IndustryPage {
   complianceMandate: string
   complianceMandateFull: string
   trainingContext: PortableTextBlock[]
-  featuredCaseStudy?: { id: string; slug: string }
+  featuredCaseStudy?: CaseStudy | null
+  complianceClauses: ComplianceClause[]
+  riskScenarios: RiskScenario[]
+  recommendedProgramSlugs: ProgramSlug[]
   homepageOrder: number
   seoTitle: string
   seoDescription: string
