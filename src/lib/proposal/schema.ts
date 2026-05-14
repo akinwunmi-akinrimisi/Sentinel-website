@@ -71,6 +71,8 @@ export const proposalSchema = z.object({
   timeline: z.enum(TIMELINE),
   referralSource: z.enum(REFERRAL),
   notes: z.string().trim().max(2000).optional().default(''),
+  /** Honeypot — must be empty. Bots fill all fields; humans never see it (sr-only). */
+  hp_field: z.string().max(0).optional().default(''),
 })
 
 export type ProposalInput = z.infer<typeof proposalSchema>

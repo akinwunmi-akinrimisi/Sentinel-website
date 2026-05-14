@@ -40,6 +40,7 @@ export function ProposalForm() {
       jobTitle: "",
       certifications: [],
       notes: "",
+      hp_field: "",
     },
     mode: "onBlur",
   })
@@ -98,6 +99,16 @@ export function ProposalForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-6 max-w-[42rem]"
     >
+      {/* Honeypot — hidden from sighted users + assistive tech. Bots fill all fields. */}
+      <input
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[10000px] -top-[10000px] h-0 w-0 opacity-0 pointer-events-none"
+        {...register("hp_field")}
+      />
+
       <Field label="Full name" error={errors.fullName?.message} required>
         <Input {...register("fullName")} autoComplete="name" />
       </Field>

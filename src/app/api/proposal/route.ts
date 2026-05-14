@@ -97,6 +97,12 @@ export async function POST(req: NextRequest) {
 
   const payload = parsed.data
 
+  // Honeypot — bots fill all fields. If hp_field is non-empty, silently 200
+  // without sending email. The bot thinks it succeeded and doesn't retry.
+  if (payload.hp_field && payload.hp_field.length > 0) {
+    return NextResponse.json({ success: true })
+  }
+
   // 3. Rate limit by IP
   const ip = getClientIp(req)
   const rl = await rateLimit(ip)
