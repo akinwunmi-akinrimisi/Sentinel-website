@@ -24,8 +24,9 @@ export function ResultsByProgram({ stats }: ResultsByProgramProps) {
 
   return (
     <section
+      id="results"
       aria-labelledby="results-headline"
-      className="py-20 md:py-28 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)]"
+      className="scroll-mt-24 py-20 md:py-28 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)]"
     >
       <div className="container-sentinel">
         <div className="max-w-[56rem] mx-auto">

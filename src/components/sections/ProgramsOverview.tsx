@@ -16,8 +16,9 @@ const priceFormatter = new Intl.NumberFormat("en-US", {
 export function ProgramsOverview({ programs }: ProgramsOverviewProps) {
   return (
     <section
+      id="programs"
       aria-labelledby="programs-headline"
-      className="py-20 md:py-28 bg-[var(--color-surface)]"
+      className="scroll-mt-24 py-20 md:py-28 bg-[var(--color-surface)]"
     >
       <div className="container-sentinel">
         <div className="max-w-[48rem] mb-14">

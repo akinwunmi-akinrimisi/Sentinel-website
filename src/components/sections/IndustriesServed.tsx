@@ -9,8 +9,9 @@ interface IndustriesServedProps {
 export function IndustriesServed({ industries }: IndustriesServedProps) {
   return (
     <section
+      id="industries"
       aria-labelledby="industries-headline"
-      className="py-20 md:py-28 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)]"
+      className="scroll-mt-24 py-20 md:py-28 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)]"
     >
       <div className="container-sentinel">
         <div className="max-w-[48rem] mb-14">
