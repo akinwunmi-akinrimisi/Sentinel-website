@@ -2,6 +2,7 @@ import Link from "next/link"
 import { FadeUp } from "@/components/motion/FadeUp"
 import { LineReveal } from "@/components/motion/LineReveal"
 import { StatCounter } from "@/components/motion/StatCounter"
+import { BookingButton } from "@/components/sections/BookingDialog"
 import type { CompanyStats } from "@/lib/sanity/types"
 
 interface HeroProps {
@@ -66,15 +67,7 @@ export function Hero({ stats, pressOutlets }: HeroProps) {
                   Request a Training Proposal
                   <span aria-hidden="true">→</span>
                 </Link>
-                <a
-                  href={process.env.NEXT_PUBLIC_CAL_LINK ?? "https://cal.com/sentinelinstitute/discovery"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-secondary"
-                  data-cta="hero-secondary"
-                >
-                  Book a 20-Minute Discovery Call
-                </a>
+                <BookingButton variant="secondary" ctaId="hero-secondary" />
               </div>
             </FadeUp>
 
