@@ -48,6 +48,12 @@ export interface OutcomeMetric {
   value: string
 }
 
+export interface TimelineMilestone {
+  date: string
+  headline: string
+  description: string
+}
+
 export interface CaseStudy {
   _id: string
   slug: string
@@ -73,6 +79,8 @@ export interface CaseStudy {
   outcome: PortableTextBlock[]
   outcomeMetrics: OutcomeMetric[]
   clientLogo?: SanityImage
+  timeline: TimelineMilestone[]
+  roi: string
   publishedDate: string
   featured: boolean
 }
