@@ -96,6 +96,54 @@ export const programPage = defineType({
       rows: 2,
       validation: (Rule) => Rule.required().max(160),
     }),
+    defineField({
+      name: 'outcomes',
+      type: 'array',
+      title: 'Outcomes after completion',
+      description: '3–10 capability statements rendered under "After completion, your team can…"',
+      of: [defineArrayMember({ type: 'string' })],
+      validation: (Rule) => Rule.required().min(3).max(10).unique(),
+    }),
+    defineField({
+      name: 'sampleLesson',
+      type: 'blockContent',
+      title: 'Sample lesson preview',
+      description: 'Editorial excerpt from a real lesson. Show prospects what live instruction feels like.',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'comparisonSelfStudy',
+      type: 'array',
+      title: 'Sentinel vs Self-study comparison',
+      description: '3–8 rows comparing Sentinel methodology to CompTIA self-study / Pearson VUE prep.',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'comparisonRow',
+          fields: [
+            defineField({
+              name: 'category',
+              type: 'string',
+              validation: (Rule) => Rule.required().max(50),
+            }),
+            defineField({
+              name: 'sentinel',
+              type: 'string',
+              validation: (Rule) => Rule.required().max(200),
+            }),
+            defineField({
+              name: 'selfStudy',
+              type: 'string',
+              validation: (Rule) => Rule.required().max(200),
+            }),
+          ],
+          preview: {
+            select: { title: 'category', subtitle: 'sentinel' },
+          },
+        }),
+      ],
+      validation: (Rule) => Rule.required().min(3).max(8),
+    }),
   ],
   preview: {
     select: { name: 'certName', slug: 'slug.current', price: 'priceUSD' },
