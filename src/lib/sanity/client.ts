@@ -16,8 +16,13 @@ if (!projectId) {
   )
 }
 
+// '@sanity/client' validates projectId synchronously in its constructor and
+// throws if the value is an empty string. When projectId is missing (dev
+// misconfiguration or build without real env), we pass a placeholder so the
+// module loads cleanly; actual fetches will fail at request time and
+// `safeFetch` in queries.ts will catch them, falling back to constants.
 const SHARED: Pick<ClientConfig, 'projectId' | 'dataset' | 'apiVersion'> = {
-  projectId: projectId ?? '',
+  projectId: projectId || 'uninitialised-project-id',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
   apiVersion: '2024-10-01',
 }
