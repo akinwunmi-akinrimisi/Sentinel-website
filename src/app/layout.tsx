@@ -13,6 +13,14 @@ import "@fontsource/ibm-plex-sans/600.css"
 import "@fontsource/ibm-plex-mono/400.css"
 import "@fontsource/ibm-plex-mono/500.css"
 
+import { GoogleAnalytics } from "@next/third-parties/google"
+import { CCPABanner } from "@/components/analytics/CCPABanner"
+import { ConsentDefault } from "@/components/analytics/ConsentDefault"
+import { CtaClickTracker } from "@/components/analytics/CtaClickTracker"
+import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker"
+
+const GA4_ID = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://sentinelinstitute.com"),
   title: {
@@ -57,7 +65,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <ConsentDefault />
+        {GA4_ID ? <GoogleAnalytics gaId={GA4_ID} /> : null}
         {children}
+        <CtaClickTracker />
+        <ScrollDepthTracker />
+        <CCPABanner />
       </body>
     </html>
   )

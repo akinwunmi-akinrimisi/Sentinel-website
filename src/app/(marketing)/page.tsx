@@ -10,6 +10,7 @@ import { Testimonials } from "@/components/sections/Testimonials"
 import { IndustriesServed } from "@/components/sections/IndustriesServed"
 import { ProposalCTA } from "@/components/sections/ProposalCTA"
 import { FAQPreview } from "@/components/sections/FAQPreview"
+import { OrganizationSchema } from "@/components/analytics/OrganizationSchema"
 import { fetchHomepageData } from "@/lib/sanity/queries"
 import { portableTextToPlain } from "@/lib/sanity/portable-text"
 import {
@@ -69,6 +70,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <OrganizationSchema />
       <Hero stats={stats} pressOutlets={pressOutlets} />
       <TrustBar
         enterpriseClients={stats.enterpriseClients}
